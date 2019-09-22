@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Mortar</string>
+    <string name="press_and_release">Press And Release</string>
+    <string name="press">press</string>
+    <string name="timer">Timer</string>
+    <string name="timeflg">timeflg</string>
+    <string name="random">random</string>string>
+</resources>
