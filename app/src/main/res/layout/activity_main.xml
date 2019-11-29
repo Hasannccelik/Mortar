@@ -42,5 +42,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="409dp"
+        android:layout_height="274dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp" />
+
+    <Button
+        android:id="@+id/sound_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/press"
+        tools:layout_editor_absoluteX="84dp"
+        tools:layout_editor_absoluteY="523dp" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -8,8 +8,11 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -144,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
         final Random r = new Random();
         sm= new int[3];
-        
+
 
     }
     //ses çal metodu
@@ -161,5 +164,42 @@ public class MainActivity extends AppCompatActivity {
         soundPool=null;
 }
 
+}
+public class SoundRecyclerAdapter extends RecyclerView.Adapter<SoundRecyclerAdapter.SoundViewHolder>{
+    private static final String TAG = "SoundRecyclerAdapter";
+    private final SoundPlayer soundPlayer;
+    public SoundRecyclerAdapter(SoundPlayer soundPlayer) {
+        this.soundPlayer = soundPlayer;
+    }
+    @Override
+    public SoundViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View soundView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_sound, parent, false);
+        return new SoundViewHolder(soundView);
+    }
+    @Override
+    public void onBindViewHolder(SoundViewHolder holder, int position) {
+        Sound s = (Sound) soundPlayer.getSounds().get(position);
+        holder.sound.setText(s.getFileName());
+    }
+    @Override
+    public int getItemCount() {
+        return soundPlayer.getSounds().size();
+    }
+    public void cleanUp() {
+        soundPlayer.release();
+    }
+    class SoundViewHolder extends RecyclerView.ViewHolder{
+        Button sound;
+        SoundViewHolder(View itemView) {
+            super(itemView);
+            sound = itemView.findViewById(R.id.sound_button);
+            sound.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    soundPlayer.play(soundPlayer.getSounds().get(getAdapterPosition()));
+                }
+            });
+        }
+    }
 }
 
