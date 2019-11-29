@@ -8,12 +8,12 @@
 
     <Button
         android:id="@+id/press"
-        android:layout_width="55dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="336dp"
-        android:background="@mipmap/tap"
+        android:layout_width="121dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="344dp"
+        android:background="@mipmap/oilcan"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.442"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

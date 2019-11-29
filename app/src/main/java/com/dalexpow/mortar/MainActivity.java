@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     TextView timeflg;
     public Button random;
     int[] sounds={raw.stealth1, raw.stealth2, raw.stealth3, raw.stealth4};//dizi değişkeni
-    int[] miniguns={raw.minigun_spin,raw.minigun_spinup,raw.minigun_spindown};//dizi minigun değişkenleri
+    static int[] sm;// soundpool dizi tanımlaması
     MediaPlayer mp1,mp2;// media player tanımlaması
     final int[] steals= new int[4]; // 4 kapasiteli dizi değişkeni
 
@@ -69,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
                //soundpool rastgele çalma denemesi
                 soundPool.play(sounds[r.nextInt(4)], 1.0f, 1.0f, 0, 0, 1.0f);
 
-
-
-
             }
         });
         //durdurma kodları
@@ -93,18 +90,7 @@ public class MainActivity extends AppCompatActivity {
         {
 
 
-
-
 };
-
-
-
-
-
-
-
-
-
 
         //minigun sesi kodları
         press.setOnTouchListener(new View.OnTouchListener(){
@@ -157,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
         steal4=soundPool.load(this,raw.stealth4,0);
 
         final Random r = new Random();
-
+        sm= new int[3];
+        
 
     }
     //ses çal metodu
