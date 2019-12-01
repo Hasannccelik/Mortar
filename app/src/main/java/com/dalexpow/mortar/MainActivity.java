@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.media.SoundPool.OnLoadCompleteListener;
 import java.util.Random;
 import java.util.Timer;
 
@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main);
-        press = (Button) findViewById(id.press);
-        random =(Button) findViewById(id.random);
-        timeflg = (TextView)findViewById(id.timeflg);
+        press = findViewById(id.press);
+        random = findViewById(id.random);
+        timeflg = findViewById(id.timeflg);
         timer = new Timer();
 
 
@@ -84,16 +84,22 @@ public class MainActivity extends AppCompatActivity {
                     mp1.reset();
                     mp1.release();
                     mp1 = null;
+                    soundPool.pause(sound1);
+                    soundPool.pause(sound2);
+                    soundPool.stop(sound1);
+                    soundPool.stop(sound2);
+                    soundPool.autoPause();
+
 
 
 
             }
         }});
 
-        {
 
 
-};
+
+
 
         //minigun sesi kodları
         press.setOnTouchListener(new View.OnTouchListener(){
@@ -102,17 +108,24 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (event.getAction() ) {
                         case MotionEvent.ACTION_DOWN:
+
                             soundPool.play(sound1, 1, 1, 1, 0, 1);
-                            //soundPool.play(sound2, 1, 1, 2, 1, 1) // sonsuz döngü
+
+                            soundPool.play(sound2, 1, 1, 2, -1, 1) ;// sonsuz döngü
+
 
                             break;
                         case MotionEvent.ACTION_UP:
-                            soundPool.autoPause();
-                            //soundPool.setVolume(sound1,0,0);
+
+
                             soundPool.play(sound3, 1, 1, 2, 0, 1);
-                            //soundPool.autoPause();
+
+
+                            soundPool.autoPause();
 
                             break;
+
+
                     }
 
 
@@ -135,6 +148,28 @@ public class MainActivity extends AppCompatActivity {
         } else {
             soundPool = new SoundPool(7, AudioManager.STREAM_MUSIC, 0);
         }
+
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build();
+            soundPool = new SoundPool.Builder()
+                    .setMaxStreams(7)
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+        } else {
+            soundPool = new SoundPool(7, AudioManager.STREAM_MUSIC, 0);
+        }
+
+
+
+
+
+
+
         //soundpool id tanımlama
         sound1=soundPool.load(this, raw.minigun_spinup,0);
         sound2=soundPool.load(this, raw.minigun_spin,0);
@@ -165,41 +200,6 @@ public class MainActivity extends AppCompatActivity {
 }
 
 }
-public class SoundRecyclerAdapter extends RecyclerView.Adapter<SoundRecyclerAdapter.SoundViewHolder>{
-    private static final String TAG = "SoundRecyclerAdapter";
-    private final SoundPlayer soundPlayer;
-    public SoundRecyclerAdapter(SoundPlayer soundPlayer) {
-        this.soundPlayer = soundPlayer;
-    }
-    @Override
-    public SoundViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View soundView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_sound, parent, false);
-        return new SoundViewHolder(soundView);
-    }
-    @Override
-    public void onBindViewHolder(SoundViewHolder holder, int position) {
-        Sound s = (Sound) soundPlayer.getSounds().get(position);
-        holder.sound.setText(s.getFileName());
-    }
-    @Override
-    public int getItemCount() {
-        return soundPlayer.getSounds().size();
-    }
-    public void cleanUp() {
-        soundPlayer.release();
-    }
-    class SoundViewHolder extends RecyclerView.ViewHolder{
-        Button sound;
-        SoundViewHolder(View itemView) {
-            super(itemView);
-            sound = itemView.findViewById(R.id.sound_button);
-            sound.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    soundPlayer.play(soundPlayer.getSounds().get(getAdapterPosition()));
-                }
-            });
-        }
-    }
-}
+
+
 
