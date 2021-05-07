@@ -2,4 +2,5 @@
 <resources>
     <item name="press" type="id" />
     <item name="timer" type="id" />
+    <item name="change" type="id" />
 </resources>
